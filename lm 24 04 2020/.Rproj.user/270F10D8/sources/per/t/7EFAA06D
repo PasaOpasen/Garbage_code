@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1587726440416.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3814912866",
+    "id" : "7EFAA06D",
+    "lastKnownWriteTime" : 1587731303,
+    "last_content_update" : 1587731354985,
+    "path" : "C:/Users/qtckp/OneDrive/Рабочий стол/Курсы/garbage/lm 24 04 2020/tasks.R",
+    "project_path" : "tasks.R",
+    "properties" : {
+        "cursorPosition" : "58,128",
+        "scrollLine" : "43",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

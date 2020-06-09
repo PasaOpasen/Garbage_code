@@ -1,0 +1,16 @@
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\bin\Debug\netcoreapp3.1\TestMyFirstNuget.exe
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\obj\Debug\netcoreapp3.1\TestMyFirstNuget.csprojAssemblyReference.cache
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\obj\Debug\netcoreapp3.1\TestMyFirstNuget.AssemblyInfoInputs.cache
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\obj\Debug\netcoreapp3.1\TestMyFirstNuget.AssemblyInfo.cs
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\bin\Debug\netcoreapp3.1\TestMyFirstNuget.deps.json
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\bin\Debug\netcoreapp3.1\TestMyFirstNuget.runtimeconfig.json
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\bin\Debug\netcoreapp3.1\TestMyFirstNuget.runtimeconfig.dev.json
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\bin\Debug\netcoreapp3.1\TestMyFirstNuget.dll
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\bin\Debug\netcoreapp3.1\TestMyFirstNuget.pdb
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\obj\Debug\netcoreapp3.1\TestMyFirstNuget.dll
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\obj\Debug\netcoreapp3.1\TestMyFirstNuget.pdb
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\obj\Debug\netcoreapp3.1\TestMyFirstNuget.genruntimeconfig.cache
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\bin\Debug\netcoreapp3.1\MathClassesLibrary.dll
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\bin\Debug\netcoreapp3.1\MathNet.Numerics.dll
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\obj\Debug\netcoreapp3.1\TestMyFirstNuget.csproj.CoreCompileInputs.cache
+C:\Users\qtckp\OneDrive\Рабочий стол\Курсы\garbage\CSharp\TestMyFirstNuget\TestMyFirstNuget\obj\Debug\netcoreapp3.1\TestMyFirstNuget.csproj.CopyComplete

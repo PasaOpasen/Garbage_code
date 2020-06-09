@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1587730899403.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "14|6|47|0|\n",
+    "hash" : "3279546327",
+    "id" : "6DF099C6",
+    "lastKnownWriteTime" : 1587731481,
+    "last_content_update" : 1587731482009,
+    "path" : "C:/Users/qtckp/OneDrive/Рабочий стол/Курсы/garbage/lm 24 04 2020/DNase_eda.Rmd",
+    "project_path" : "DNase_eda.Rmd",
+    "properties" : {
+        "cursorPosition" : "150,89",
+        "scrollLine" : "140",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

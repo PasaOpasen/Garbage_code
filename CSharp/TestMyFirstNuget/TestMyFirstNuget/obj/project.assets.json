@@ -1,0 +1,127 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "MathClassesDmPa/0.9.0.1": {
+        "type": "package",
+        "dependencies": {
+          "MathNet.Numerics": "4.9.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/MathClassesLibrary.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/MathClassesLibrary.dll": {}
+        }
+      },
+      "MathNet.Numerics/4.9.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/MathNet.Numerics.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/MathNet.Numerics.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MathClassesDmPa/0.9.0.1": {
+      "sha512": "PjRYEjnJW2Ic/UO9bvP7fHXC/VrNlzW6wBZwHGCAu9el77sEInzbGGb+dI5v+I8yHmg0ZqJrPZqWU/EK1KCHzQ==",
+      "type": "package",
+      "path": "mathclassesdmpa/0.9.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.1/MathClassesLibrary.dll",
+        "mathclassesdmpa.0.9.0.1.nupkg.sha512",
+        "mathclassesdmpa.nuspec"
+      ]
+    },
+    "MathNet.Numerics/4.9.0": {
+      "sha512": "4cYzhuMDq57oC6lwhMmuigdhP+oywmp1bMtFzvzz4wYr5eWbg0JLDPo/L1juqDkIBj+rc3FrxUEX7jcHRmnF+w==",
+      "type": "package",
+      "path": "mathnet.numerics/4.9.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/MathNet.Numerics.dll",
+        "lib/net40/MathNet.Numerics.xml",
+        "lib/net461/MathNet.Numerics.dll",
+        "lib/net461/MathNet.Numerics.xml",
+        "lib/netstandard1.3/MathNet.Numerics.dll",
+        "lib/netstandard1.3/MathNet.Numerics.xml",
+        "lib/netstandard2.0/MathNet.Numerics.dll",
+        "lib/netstandard2.0/MathNet.Numerics.xml",
+        "mathnet.numerics.4.9.0.nupkg.sha512",
+        "mathnet.numerics.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETCoreApp,Version=v3.1": [
+      "MathClassesDmPa >= 0.9.0.1"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\qtckp\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\qtckp\\OneDrive\\Рабочий стол\\Курсы\\garbage\\CSharp\\TestMyFirstNuget\\TestMyFirstNuget\\TestMyFirstNuget.csproj",
+      "projectName": "TestMyFirstNuget",
+      "projectPath": "C:\\Users\\qtckp\\OneDrive\\Рабочий стол\\Курсы\\garbage\\CSharp\\TestMyFirstNuget\\TestMyFirstNuget\\TestMyFirstNuget.csproj",
+      "packagesPath": "C:\\Users\\qtckp\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\qtckp\\OneDrive\\Рабочий стол\\Курсы\\garbage\\CSharp\\TestMyFirstNuget\\TestMyFirstNuget\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\qtckp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "netcoreapp3.1"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "netcoreapp3.1": {
+        "dependencies": {
+          "MathClassesDmPa": {
+            "target": "Package",
+            "version": "[0.9.0.1, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

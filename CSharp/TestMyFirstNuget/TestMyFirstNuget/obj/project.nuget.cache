@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "ZeKl+ZEflOny8XanvPPcN/uVR/xrbZm86AVbcUaYd6ri+Oo37kz0TMVuKz5hSumgtcmXnhrs+rtVOg8vEfP3rA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\qtckp\\OneDrive\\Рабочий стол\\Курсы\\garbage\\CSharp\\TestMyFirstNuget\\TestMyFirstNuget\\TestMyFirstNuget.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\qtckp\\.nuget\\packages\\mathclassesdmpa\\0.9.0.1\\mathclassesdmpa.0.9.0.1.nupkg.sha512",
+    "C:\\Users\\qtckp\\.nuget\\packages\\mathnet.numerics\\4.9.0\\mathnet.numerics.4.9.0.nupkg.sha512"
+  ],
+  "logs": []
+}
