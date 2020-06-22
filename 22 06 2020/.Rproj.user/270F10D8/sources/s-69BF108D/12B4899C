@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1592847663829.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1216406794",
+    "id" : "12B4899C",
+    "lastKnownWriteTime" : 1592859997,
+    "last_content_update" : 1592859997411,
+    "path" : "C:/Users/qtckp/OneDrive/Рабочий стол/Garbage_code/22 06 2020/example_cmp_function.r",
+    "project_path" : "example_cmp_function.r",
+    "properties" : {
+        "cursorPosition" : "99,58",
+        "scrollLine" : "72"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
