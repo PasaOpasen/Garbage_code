@@ -18,8 +18,6 @@ path         = paste0(WD, project.dir, 'cmp_function.R')
 source(path)
 # ---------------------- set environment ---------------------------------
 
-
-
 cmp.groups = list( 'CYP2C19_2'     = list(col = 'CYP2C19_2'),
                    'CYP2C19_2_LOF' = list(col = '2+3 vs. 1: CYP2C19_2, 1 == 0, 2+3 == 1'),
                    

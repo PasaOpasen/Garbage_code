@@ -21,8 +21,11 @@ source(path)
   
 }
 
+# так мне было проще запускать, но можно удалить эти две строки и строки 8, 22 в этом файле
 source('cmp_function.r')
 path.dir.out = getwd()
+
+
 
 ?datasets::mtcars
 

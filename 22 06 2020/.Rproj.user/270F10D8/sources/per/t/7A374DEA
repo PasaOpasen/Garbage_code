@@ -4,16 +4,16 @@
     "created" : 1592846500499.000,
     "dirty" : false,
     "encoding" : "UTF-8",
-    "folds" : "29|1|421|0|\n499|21|510|8|\n524|18|533|12|\n536|13|641|12|\n581|17|598|16|\n603|17|620|16|\n626|17|636|16|\n643|13|746|12|\n748|13|856|12|\n754|17|789|16|\n795|17|805|16|\n810|17|820|16|\n825|17|834|16|\n924|19|925|0|\n",
-    "hash" : "3413333506",
+    "folds" : "80|21|91|8|\n105|18|114|12|\n117|13|222|12|\n162|17|179|16|\n184|17|201|16|\n207|17|217|16|\n224|13|327|12|\n329|13|437|12|\n335|17|370|16|\n376|17|386|16|\n391|17|401|16|\n406|17|415|16|\n516|19|517|0|\n",
+    "hash" : "1840435307",
     "id" : "7A374DEA",
-    "lastKnownWriteTime" : 1592859901,
-    "last_content_update" : 1592859937139,
+    "lastKnownWriteTime" : 1592895524,
+    "last_content_update" : 1592895524829,
     "path" : "C:/Users/qtckp/OneDrive/Рабочий стол/Garbage_code/22 06 2020/cmp_function.R",
     "project_path" : "cmp_function.R",
     "properties" : {
-        "cursorPosition" : "864,30",
-        "scrollLine" : "495"
+        "cursorPosition" : "463,4",
+        "scrollLine" : "441"
     },
     "read_only" : false,
     "read_only_alternatives" : [
