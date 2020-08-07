@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1596803841180.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "298448904",
+    "id" : "6FF26946",
+    "lastKnownWriteTime" : 1596807747,
+    "last_content_update" : 1596807747761,
+    "path" : "C:/Users/qtckp/OneDrive/Рабочий стол/Garbage_code/Sobes 07 08 2020/base_script.R",
+    "project_path" : "base_script.R",
+    "properties" : {
+        "cursorPosition" : "68,0",
+        "scrollLine" : "44",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
