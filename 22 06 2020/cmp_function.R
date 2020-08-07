@@ -100,6 +100,11 @@ cmp.any.group.all = function(id.group,
             x = n.pr[[which(group.labels==n1)]]
             y = n.pr[[which(group.labels==n2)]]
             
+            ddt = dt[dt[[1]]==n1 | dt[[1]]==n2,]
+            
+            #print(x)
+            #print(y)
+            
             n.x = n.g[which(group.labels == n1)]
             n.y = n.g[which(group.labels == n2)]
             
@@ -231,7 +236,8 @@ cmp.any.group.all = function(id.group,
                 # group2 | 33 78
                 #
                 
-                freq.matrix =  table(dt)
+                freq.matrix =  table(ddt)
+                print(ddt)
                 nrow.f.m = nrow(freq.matrix)
                 ncol.f.m = ncol(freq.matrix)
                 
@@ -334,7 +340,7 @@ cmp.any.group.all = function(id.group,
                     (all(is.na(y)) == FALSE)
                 )
                 {
-                    n.matrix    = table(dt)
+                    n.matrix    = table(ddt)
                     prop.matrix = round((prop.table(n.matrix, 1) * 100), 1)
                     
                     # the code below concatenates rows of n.matrix and prop.matrix in the following format:
@@ -449,6 +455,7 @@ cmp.any.group.all = function(id.group,
     result.real = result.real[,-c(1)]
     colnames(result.real)[1:ncol(result.real) %% 7 == 5]= paste('diff of',pair)
     colnames(result.real)[1:ncol(result.real) %% 7 == 6]= paste('p.value of',pair)
+    
     for(i in seq(combs)){
         colnames(result.real)[(i-1)*7+c(1,3)]=paste('count of',combs[[i]])
         colnames(result.real)[(i-1)*7+c(2,4)]=paste('stat of',combs[[i]])

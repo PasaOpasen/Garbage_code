@@ -1,15 +1,43 @@
+---
+title: "Data analytics sobes"
+author: "Дмитрий Пасько"
+date: "08 08 2020"
+output: 
+  html_document:
+    df_print: paged
+    toc: yes
+    theme: united
+    #code_folding: hide
+---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F,include = TRUE,tidy = TRUE,cache = FALSE,eval = TRUE, message = FALSE,warning = FALSE,fig.align = "center")
+```
 
+## Чтение и обработка данных
+
+Прочтём таблицы и зададим англоязычные имена столбцам:
+
+```{r, echo=T}
 library(tidyverse)
 library(readxl)
+library(magrittr)
 
 remains = read_xlsx('remains.xlsx')
 colnames(remains) = c('id', 'size', 'free_count', 'self_cost', 'sell_cost')
 
+print(remains)
 
 sells = read_xlsx('sells.xlsx')
 colnames(sells) = c('id_old', 'size', 'mounth', 'sell_count')
 
+print(sells)
+```
+
+
+В соотвествии с требованиями преобразуем старые артикулы к новым и удалим пробел из новых:
+
+```{r, echo=T}
 
 # prepare ids
 
@@ -47,10 +75,12 @@ colnames(sells)[1] = 'id'
 
 remains$id = str_remove(remains$id, ' ')
 
+print(sells)
+```
 
+Вставим недостающие строки и сольём таблицы:
 
-# error objects
-
+```{r, echo=T}
 
 sell_unique = unique(sells$id)
 remains_unique = unique(remains$id)
@@ -67,38 +97,59 @@ remains = rbind(remains,
 
 
 merged = merge(sells, remains)
+```
 
-# 1
+
+
+## Задача 1
+
+Общая сумма продаж в рублях за июль:
+
+```{r, echo=TRUE}
 
 sum_july = merged %>% filter(mounth == 7) %>% summarise(s = sum(sell_count * sell_cost))
 
 print(sum_july[[1]])
+```
 
 
+## Задача 2
 
-# 2
+Общая сумма прибыли в рублях в октябре:
 
+```{r, echo=TRUE}
 sum_october = merged %>% filter(mounth == 10) %>% summarise(s = sum(sell_count * (sell_cost - self_cost)))
 
 print(sum_october[[1]])
+```
 
+## Задача 3
 
-# 3
+5-й артикул в рейтинге продаж в августе:
 
+```{r, echo=TRUE}
 august = merged %>% filter(mounth == 8) %>% group_by(id) %>% summarise(r = sum(sell_count * sell_cost)) %>% arrange(-r)
 
-print(august[5,])
+print(august[5,1])
 
+```
 
-# 4
+## Задача 4
 
+Остаток на складе ТОП-10 артикулов в августе:
+
+```{r, echo=TRUE}
 remain = sapply(august$id[1:10], function(d) merged$free_count[merged$id == d][[1]][[1]] )
 
 print(sum(remain))
 
+```
 
-# 5
+## Задача 5
 
+График распределения количества буквенных размеров:
+
+```{r, echo=TRUE}
 tb = merged %>% select(id, size) %>% filter(str_detect(size, '[XSML]')) %>% 
     group_by(size) %>% summarise(count = n())
 
@@ -108,16 +159,7 @@ ggplot(
 ) + geom_col() + theme_bw() + labs(x = 'size', title = 'Count of products by size')+
   annotate("text", x = 1:9, y = tb$count + 150, label = as.character(tb$count), size = 5)
 
-
-
-
-
-
-
-
-
-
-
+```
 
 
 

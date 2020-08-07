@@ -8,7 +8,7 @@ colnames(remains) = c('id', 'size', 'free_count', 'self_cost', 'sell_cost')
 
 
 sells = read_xlsx('sells.xlsx')
-colnames(sells) = c('id_old', 'size', 'month', 'sell_count')
+colnames(sells) = c('id_old', 'size', 'mounth', 'sell_count')
 
 
 # prepare ids
@@ -64,6 +64,49 @@ remains = rbind(remains,
                        size = sizes,
                        free_count = 0, self_cost = 200, sell_cost = 1000 ))
 
+
+
+merged = merge(sells, remains)
+
+# 1
+
+sum_july = merged %>% filter(mounth == 7) %>% summarise(s = sum(sell_count * sell_cost))
+
+print(sum_july[[1]])
+
+
+
+# 2
+
+sum_october = merged %>% filter(mounth == 10) %>% summarise(s = sum(sell_count * (sell_cost - self_cost)))
+
+print(sum_october[[1]])
+
+
+# 3
+
+august = merged %>% filter(mounth == 8) %>% group_by(id) %>% summarise(r = sum(sell_count * sell_cost)) %>% arrange(-r)
+
+print(august[5,])
+
+
+# 4
+
+remain = sapply(august$id[1:10], function(d) merged$free_count[merged$id == d][[1]][[1]] )
+
+print(sum(remain))
+
+
+# 5
+
+tb = merged %>% select(id, size) %>% filter(str_detect(size, '[XSML]')) %>% 
+    group_by(size) %>% summarise(count = n())
+
+ggplot(
+  tb,
+  aes(x = factor(size), y = count) 
+) + geom_col() + theme_bw() + labs(x = 'size', title = 'Count of products by size')+
+  annotate("text", x = 1:9, y = tb$count + 150, label = as.character(tb$count), size = 5)
 
 
 
