@@ -61,7 +61,17 @@ def fast_choice(options, probs):
     return options[-1]
 
 
-def creator(EXPLORE_STEPS, PROB, FIRST_SELECTION, SECOND_SELECTION):
+def probsnorm(x):
+    return x/x.sum()
+
+def softmax(x, tau):
+    x2 = x/tau
+    e = np.exp(x2 - x2.max())
+    return e/e.sum()
+
+
+
+def creator(EXPLORE_STEPS, FIRST_SELECTION, START_TAU, TAU_MULT):
 
     ROUNDS = 2000
 
@@ -72,21 +82,27 @@ def creator(EXPLORE_STEPS, PROB, FIRST_SELECTION, SECOND_SELECTION):
         c_arr[i] = c_arr[i-1]*0.97
 
     x_arr = np.linspace(0, 100, 101) # net of predicted thresholds
-
-    def softmax(x):
-        #e = np.exp(x - x.max())
-        #return e/e.sum()
-        return x/x.sum()
-    
+    tau = START_TAU
+ 
     #@profile
-    def get_sample(array, probs, best_of):
+    def get_sample_probs(array, probs, best_of):
 
-        p = softmax(probs)# to probability form
+        p = probsnorm(probs)# to probability form
 
         args = np.argsort(p)[-best_of:] # select best_of values with biggest probs
 
         # return array[np.random.choice(args, 1, p = softmax(p[args]))[0]]
-        return array[fast_choice(args, softmax(p[args]))]
+        return array[fast_choice(args, probsnorm(p[args]))]
+    
+    def get_sample_softmax(array, probs):
+        nonlocal tau
+        tau *= TAU_MULT
+        
+        p = softmax(probs, tau)# to probability form
+
+        # return array[np.random.choice(args, 1, p = softmax(p[args]))[0]]
+        return fast_choice(array, p)
+    
 
     cached_x = {}
     def get_floor_x(c):
@@ -140,9 +156,9 @@ def creator(EXPLORE_STEPS, PROB, FIRST_SELECTION, SECOND_SELECTION):
 
         #likeh = np.array([x_arr[ind]*c_arr[b]*probs[bandit, ind]/probs[bandit, :].sum() for bandit, (ind, b) in enumerate(zip(likeh, bandit_counts))])
 
-        likeh = np.array([get_sample(get_floor_x(b), probs[bandit, :], FIRST_SELECTION) for bandit, b in enumerate(bandits_counts)])
+        likeh = np.array([get_sample_probs(get_floor_x(b), probs[bandit, :], FIRST_SELECTION) for bandit, b in enumerate(bandits_counts)])
 
-        return get_sample(bandits_indexes, likeh, SECOND_SELECTION) if random.random() < PROB else random.randrange(BANDITS)    
+        return get_sample_softmax(bandits_indexes, likeh)# if random.random() < PROB else random.randrange(BANDITS)    
 
 
 
@@ -197,8 +213,10 @@ def creator(EXPLORE_STEPS, PROB, FIRST_SELECTION, SECOND_SELECTION):
 def random_agent(observation, configuration):
     return random.randrange(configuration.banditCount)
 
-for _ in range(10): run_env(creator(5, 0.9, 10, 5), random_agent)
-
+for i in range(10): 
+    print(f"i = {i+1}")
+    print(run_env(creator(5, 10, i+1, 0.95), random_agent))
+    print()
 
 
 
