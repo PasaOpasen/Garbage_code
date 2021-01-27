@@ -30,13 +30,15 @@ def run_env(agent1, agent2):
     
     thresholds = [sample() for _ in range(conf.banditCount)]
     
+    start_thresh = np.array(thresholds)
+    
     reward1 = 0
     reward2 = 0
     lastact = None
     
     for step in range(2000):
         
-        act1 = agent1(Observation(lastact, reward1, step), conf)
+        act1 = agent1[0](Observation(lastact, reward1, step), conf)
         act2 = agent2(Observation(lastact, reward2, step), conf)
         
         reward1 += 1 if sample() < thresholds[act1] else 0
@@ -47,7 +49,12 @@ def run_env(agent1, agent2):
         
         lastact = (act1, act2)
         
-
+        #print(np.sum(np.abs(agent1[1]() - start_thresh)))
+    
+    mat = np.array([start_thresh, agent1[1]()]).T
+    mat2 = np.array([np.floor(thresholds), agent1[2]()]).T
+    #raise Exception()
+    #print(np.hstack((mat, mat2)))
     return (reward1, reward2)
 
 # https://stackoverflow.com/questions/18622781/why-is-numpy-random-choice-so-slow
@@ -60,20 +67,19 @@ def fast_choice(options, probs):
             return options[i]
     return options[-1]
 
-
 def probsnorm(x):
     return x/x.sum()
 
-def softmax(x, tau):
-    x2 = x/tau
+def softmax(x, tau_param):
+    x2 = x/tau_param
     e = np.exp(x2 - x2.max())
     return e/e.sum()
 
 
 
-def creator(EXPLORE_STEPS, FIRST_SELECTION, START_TAU, TAU_MULT):
+def creator(EXPLORE_STEPS, START_TAU, TAU_MULT):
 
-    ROUNDS = 2000
+    ROUNDS = 4000
 
 
     c_arr = np.empty(ROUNDS) # array of coefs 1, 0.97, 0.97^2, ...
@@ -85,14 +91,12 @@ def creator(EXPLORE_STEPS, FIRST_SELECTION, START_TAU, TAU_MULT):
     tau = START_TAU
  
     #@profile
-    def get_sample_probs(array, probs, best_of):
+    def get_sample_probs(array, probs):
 
-        p = probsnorm(probs)# to probability form
+        #p = probsnorm(probs)# to probability form
 
-        args = np.argsort(p)[-best_of:] # select best_of values with biggest probs
-
-        # return array[np.random.choice(args, 1, p = softmax(p[args]))[0]]
-        return array[fast_choice(args, probsnorm(p[args]))]
+        #return fast_choice(array, p)
+        return array[np.argmax(probs)]
     
     def get_sample_softmax(array, probs):
         nonlocal tau
@@ -124,7 +128,7 @@ def creator(EXPLORE_STEPS, FIRST_SELECTION, START_TAU, TAU_MULT):
 
     bandits_indexes = np.arange(BANDITS)
 
-    start_bandits = np.random.choice(bandits_indexes, int(BANDITS*EXPLORE_STEPS/3), replace = True) # just start random sequence of bandits selection before start of main algorithm
+    start_bandits = np.random.choice(bandits_indexes, int(BANDITS*EXPLORE_STEPS), replace = True) # just start random sequence of bandits selection before start of main algorithm
 
 
 
@@ -132,7 +136,7 @@ def creator(EXPLORE_STEPS, FIRST_SELECTION, START_TAU, TAU_MULT):
     #@profile
     def update_counts(act1, act2, my_reward):
         nonlocal bandits_counts, probs
-        opp = [act != my_last_action for act in (act1, act2)]
+        opp = [i for i, act in enumerate((act1, act2)) if act != my_last_action]
         opp = (act1, act2)[opp[0]] if len(opp) > 0 else my_last_action
 
         mlt = get_floor_x(bandits_counts[my_last_action])/100
@@ -144,9 +148,18 @@ def creator(EXPLORE_STEPS, FIRST_SELECTION, START_TAU, TAU_MULT):
 
         bandits_counts[my_last_action] += 1
         bandits_counts[opp] += 1
+    
+    def get_bound():
+        
+        return np.array([x_arr[np.argmax(arr)] for arr in probs])    
+    
+    def get_bound2():
+        return np.array([get_sample_probs(get_floor_x(b), probs[bandit, :]) for bandit, b in enumerate(bandits_counts)])
+    
     #@profile
-    def get_best_action():
-
+    def get_best_action(acts):
+        #opp = [act != my_last_action for act in acts]
+        #opp = acts[opp[0]] if len(opp) > 0 else my_last_action
         #inds = np.unravel_index(probs.argmax(), probs.shape)
 
         #return inds[0] # select best bandit
@@ -156,17 +169,26 @@ def creator(EXPLORE_STEPS, FIRST_SELECTION, START_TAU, TAU_MULT):
 
         #likeh = np.array([x_arr[ind]*c_arr[b]*probs[bandit, ind]/probs[bandit, :].sum() for bandit, (ind, b) in enumerate(zip(likeh, bandit_counts))])
 
-        likeh = np.array([get_sample_probs(get_floor_x(b), probs[bandit, :], FIRST_SELECTION) for bandit, b in enumerate(bandits_counts)])
+        likeh = np.array([get_sample_probs(get_floor_x(b), probs[bandit, :]) for bandit, b in enumerate(bandits_counts)])
+        #likeh[opp] += 15
+        return get_sample_softmax(bandits_indexes, likeh)# if random.random() < PROB else random.randrange(BANDITS)
+    
+    
+    
 
-        return get_sample_softmax(bandits_indexes, likeh)# if random.random() < PROB else random.randrange(BANDITS)    
-
+    
+    
+    current_bandit = 0
+    steps = 0
+    fall = False
+    
 
 
     last_reward = 0
     #@profile
     def pasa_agent(observation, configuration):
 
-        nonlocal BANDITS, start_bandits, bandits_counts, probs, last_reward, bandits_indexes, my_last_action
+        nonlocal BANDITS, start_bandits, bandits_counts, probs, last_reward, bandits_indexes, my_last_action, steps, fall, current_bandit
 
         if observation.step == 0:
 
@@ -175,15 +197,33 @@ def creator(EXPLORE_STEPS, FIRST_SELECTION, START_TAU, TAU_MULT):
 
             bandits_indexes = np.arange(BANDITS, dtype = np.int16)   
 
-            start_bandits = np.random.choice(bandits_indexes, int(BANDITS*EXPLORE_STEPS/3), replace = True)
+            start_bandits = np.random.choice(bandits_indexes, int(BANDITS*EXPLORE_STEPS), replace = True)
 
             bandits_counts = np.zeros(BANDITS, dtype = np.int16)
 
             probs = np.ones((BANDITS, x_arr.size))
 
 
-            my_last_action = start_bandits[0]
+            my_last_action = current_bandit #start_bandits[0]
+            steps += 1
+        
+        #elif current_bandit != BANDITS-1 and fall:
+        #    update_counts(int(observation.lastActions[0]), int(observation.lastActions[1]), observation.reward - last_reward)
+        #    
+        #    if observation.reward - last_reward == 0:
+        #        fall = True
+            
 
+        #    if steps >= EXPLORE_STEPS and fall:
+        #        steps = 0
+        #        fall = False
+        #        current_bandit += 1
+            
+        #    my_last_action = min(current_bandit, BANDITS - 1)
+        #    steps += 1            
+                
+            
+        
         elif observation.step < start_bandits.size:
 
             update_counts(int(observation.lastActions[0]), int(observation.lastActions[1]), observation.reward - last_reward)
@@ -194,15 +234,18 @@ def creator(EXPLORE_STEPS, FIRST_SELECTION, START_TAU, TAU_MULT):
 
             update_counts(int(observation.lastActions[0]), int(observation.lastActions[1]), observation.reward - last_reward)
 
-            my_last_action = get_best_action()
+            my_last_action = get_best_action(observation.lastActions)
 
 
         last_reward = observation.reward 
         my_last_action = int(my_last_action)
-
+        
+        #print(get_bound())
+        
         return my_last_action
     
-    return pasa_agent
+    
+    return pasa_agent, get_bound, get_bound2
 
 
 
@@ -213,9 +256,10 @@ def creator(EXPLORE_STEPS, FIRST_SELECTION, START_TAU, TAU_MULT):
 def random_agent(observation, configuration):
     return random.randrange(configuration.banditCount)
 
-for i in range(10): 
+for i in range(1): 
     print(f"i = {i+1}")
-    print(run_env(creator(5, 10, i+1, 0.95), random_agent))
+    print(run_env(creator(5, i+1, 0.95), random_agent))
+    #print(run_env(creator(5, i+1, 0.97), creator(5, i+1, 0.97)))
     print()
 
 
