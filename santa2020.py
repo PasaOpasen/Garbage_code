@@ -54,7 +54,7 @@ def run_env(agent1, agent2):
     mat = np.array([start_thresh, agent1[1]()]).T
     mat2 = np.array([np.floor(thresholds), agent1[2]()]).T
     #raise Exception()
-    #print(np.hstack((mat, mat2)))
+    print(np.hstack((mat, mat2)))
     return (reward1, reward2)
 
 # https://stackoverflow.com/questions/18622781/why-is-numpy-random-choice-so-slow
@@ -202,8 +202,10 @@ def creator(EXPLORE_STEPS, START_TAU, TAU_MULT):
             bandits_counts = np.zeros(BANDITS, dtype = np.int16)
 
             probs = np.ones((BANDITS, x_arr.size))
-
-
+            
+            probs = np.array([x_arr/100]*BANDITS)
+     
+            
             my_last_action = current_bandit #start_bandits[0]
             steps += 1
         
@@ -250,6 +252,58 @@ def creator(EXPLORE_STEPS, START_TAU, TAU_MULT):
 
 
 
+def multbeta():
+
+    bandit_state = None
+    total_reward = 0
+    last_step = None
+    
+    def multi_armed_bandit_agent(observation, configuration):
+        
+        nonlocal bandit_state, total_reward, last_step
+    
+        step = 1.5 #you can regulate exploration / exploitation balacne using this param
+        
+        decay_rate = 0.97 # how much do we decay the win count after each call
+        
+            
+        if observation.step == 0:
+            # initial bandit state
+            bandit_state = [[1,1] for i in range(configuration.banditCount)]
+        else:       
+            # updating bandit_state using the result of the previous step
+            last_reward = observation.reward - total_reward
+            total_reward = observation.reward
+            
+            # we need to understand who we are Player 1 or 2
+            player = int(last_step == observation.lastActions[1])
+            
+            if last_reward > 0:
+                bandit_state[observation.lastActions[player]][0] += step
+            else:
+                bandit_state[observation.lastActions[player]][1] += step
+            
+            bandit_state[observation.lastActions[0]][0] = (bandit_state[observation.lastActions[0]][0] - 1) * decay_rate + 1
+            bandit_state[observation.lastActions[1]][0] = (bandit_state[observation.lastActions[1]][0] - 1) * decay_rate + 1
+    
+    #     generate random number from Beta distribution for each agent and select the most lucky one
+        best_proba = -1
+        best_agent = None
+        for k in range(configuration.banditCount):
+            proba = np.random.beta(bandit_state[k][0],bandit_state[k][1])
+            if proba > best_proba:
+                best_proba = proba
+                best_agent = k
+            
+        last_step = best_agent
+        return best_agent
+    
+    return multi_armed_bandit_agent
+
+
+
+
+
 
 
 
@@ -258,7 +312,7 @@ def random_agent(observation, configuration):
 
 for i in range(1): 
     print(f"i = {i+1}")
-    print(run_env(creator(5, i+1, 0.95), random_agent))
+    print(run_env(creator(5, i+1, 0.95), multbeta()))
     #print(run_env(creator(5, i+1, 0.97), creator(5, i+1, 0.97)))
     print()
 
