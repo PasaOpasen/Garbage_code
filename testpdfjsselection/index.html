@@ -1,0 +1,53 @@
+
+<!DOCTYPE html><meta charset="utf-8">
+<link rel="stylesheet" href="pdf.js/web/text_layer_builder.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="pdf.js/web/ui_utils.js"></script>
+<script src="pdf.js/web/text_layer_builder.js"></script>
+<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+<body>
+  <div>
+    <canvas id="the-canvas" style="border:1px solid black;"></canvas>
+    <div id="text-layer" class="textLayer"></div>
+  </div>
+<script>
+ 
+PDFJS.getDocument("result.pdf").then(function(pdf){
+    var page_num = 1;
+    pdf.getPage(page_num).then(function(page){
+        var scale = 1.5;
+        var viewport = page.getViewport(scale);
+        var canvas = $('#the-canvas')[0];
+        var context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+ 
+        var canvasOffset = $(canvas).offset();
+        var $textLayerDiv = $('#text-layer').css({
+            height : viewport.height+'px',
+            width : viewport.width+'px',
+            top : canvasOffset.top,
+            left : canvasOffset.left
+        });
+ 
+        page.render({
+            canvasContext : context,
+            viewport : viewport
+        });
+ 
+        page.getTextContent().then(function(textContent){
+           console.log( textContent );
+            var textLayer = new TextLayerBuilder({
+                textLayerDiv : $textLayerDiv.get(0),
+                pageIndex : page_num - 1,
+                viewport : viewport
+            });
+ 
+            textLayer.setTextContent(textContent);
+            textLayer.render();
+        });
+    });
+});
+</script>
+</body>
+</html>

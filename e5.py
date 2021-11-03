@@ -12,24 +12,24 @@ def find(N):
     search_list = lst[:-1]
     max_elem = lst[-1]
 
-    for a in search_list:
-        for b in search_list:
+    for ia, a in enumerate(search_list):
+        for ib, b in enumerate(search_list[ia:]):
             
             sm_ab = a+b
 
-            if b >= a or sm_ab > max_elem:
+            if sm_ab > max_elem:
                 break
 
-            for c in search_list:
+            for ic, c in enumerate(search_list[ia+ib:]):
                 sm_abc = sm_ab + c
 
-                if c >= b or sm_abc > max_elem :
+                if sm_abc > max_elem:
                     break
 
-                for d in search_list:
+                for d in search_list[ia+ib+ic:]:
                     sm_abcb = sm_abc + d
-
-                    if d >= c or sm_abc > max_elem:
+                    
+                    if sm_abcb > max_elem:
                         break
 
                     if sm_abcb in st:
@@ -95,7 +95,7 @@ def find3(N):
     pairs = [[]]
     for i, a in enumerate(search_list):
         max_b = max_elem - a
-        for b in search_list[:i+1]:
+        for b in search_list[i:]:
             if b >= max_b:
                 break
 
@@ -105,7 +105,15 @@ def find3(N):
             max_cd = max_b - b
 
             for increase_pairs in pairs:
+                if increase_pairs[0][0] >= max_cd:
+                    continue
+
+                #if increase_pairs[0][1] > a:
+                #    continue
+
                 for c, d in increase_pairs:
+                    if d > a :
+                        break
                     
                     sum_cd = c + d
 
@@ -121,7 +129,7 @@ def find3(N):
 
 
 
-find3(150)
+find(150)
 
 
 
