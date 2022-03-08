@@ -1,0 +1,32 @@
+def _close_FileHandlers():
+    for logger in _all_loggers:
+        for handler in logger.handlers:
+            if isinstance(handler, logging.FileHandler):
+                handler.close()
+
+def _open_FileHandlers():
+    for logger in _all_loggers:
+        for handler in logger.handlers:
+            if isinstance(handler, logging.FileHandler):
+                handler._open()
+
+
+
+def process_filehandlers():
+    """
+    до вызова функции открывает файлы логов, а после вызова закрывает
+    """
+
+    def decorator(func):
+
+        @functools.wraps(func)
+        def wrapped(*args, **kwargs):
+            try:
+                _open_FileHandlers()
+                return func(*args, **kwargs)
+            finally:
+                _close_FileHandlers()
+
+        return wrapped
+
+    return decorator
